@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Tasks - Passive Wages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+header{
+  background:#020617;
+  padding:15px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.box{
+  background:#020617;
+  margin:15px;
+  padding:15px;
+  border-radius:10px;
+}
+
+button{
+  width:90%;
+  padding:12px;
+  margin:8px;
+  border:none;
+  border-radius:8px;
+  background:#22c55e;
+  color:black;
+  font-size:16px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#020617;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>Tasks</header>
+
+<div class="box">
+<h3>📢 Ad Tasks</h3>
+
+<button onclick="doTask(1,'https://shorturl.at/79Q90')">Open Ad 1 (+100)</button>
+<button onclick="doTask(2,'https://shorturl.at/xRTuZ')">Open Ad 2 (+100)</button>
+<button onclick="doTask(3,'https://shorturl.at/vq2lM')">Open Ad 3 (+100)</button>
+
+</div>
+
+<div class="box">
+<h3>🔗 Share App</h3>
+<button onclick="shareApp()">Share (+100)</button>
+<p id="shareinfo"></p>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="tasks.html">Tasks</a>
+<a href="withdraw.html">Withdraw</a>
+</nav>
+
+<script>
+
+function getCoins(){
+ return Number(localStorage.getItem("coins")||0);
+}
+
+function setCoins(x){
+ localStorage.setItem("coins",x);
+}
+
+function doTask(id,link){
+
+ let done = JSON.parse(localStorage.getItem("tasks")||"[]");
+
+ if(done.includes(id)){
+   alert("Already Completed!");
+   return;
+ }
+
+ window.open(link,"_blank");
+
+ done.push(id);
+ localStorage.setItem("tasks",JSON.stringify(done));
+
+ setCoins(getCoins()+100);
+
+ alert("🎉 +100 Coins Added!");
+}
+
+function shareApp(){
+
+ let c = Number(localStorage.getItem("share")||0);
+
+ if(c>=5){
+  document.getElementById("shareinfo").innerText="Max 5 Share Done!";
+  return;
+ }
+
+ c++;
+
+ localStorage.setItem("share",c);
+
+ setCoins(getCoins()+100);
+
+ document.getElementById("shareinfo").innerText=
+ "Shared: "+c+"/5 | +100 Coins";
+
+}
+
+</script>
+
+</body>
+</html>
