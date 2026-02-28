@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+ background:#020617;
+ color:white;
+ font-family:Arial;
+ text-align:center;
+ padding-top:80px;
+}
+
+input,button{
+ width:80%;
+ padding:12px;
+ margin:10px;
+ border:none;
+ border-radius:8px;
+}
+
+button{
+ background:#2563eb;
+ color:white;
+ font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔐 Admin Login</h2>
+
+<input type="password" id="pass" placeholder="Enter Password">
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script>
+
+function login(){
+
+ let p = document.getElementById("pass").value;
+
+ let secret = "musfiq@3797"; // 🔴 এখানে নিজের Password বসাবে
+
+ if(p===secret){
+
+   sessionStorage.setItem("admin","yes");
+
+   window.location="admin.html";
+
+ }else{
+
+   document.getElementById("msg").innerText="❌ Wrong Password";
+
+ }
+
+}
+
+</script>
+
+</body>
+</html>
