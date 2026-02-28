@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel - Passive Wages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+ background:#0f172a;
+ color:white;
+ font-family:Arial;
+ text-align:center;
+}
+
+header{
+ background:#020617;
+ padding:15px;
+ font-size:22px;
+ font-weight:bold;
+}
+
+.box{
+ background:#020617;
+ margin:15px;
+ padding:15px;
+ border-radius:10px;
+}
+
+button{
+ width:90%;
+ padding:10px;
+ margin:6px;
+ border:none;
+ border-radius:8px;
+ background:#22c55e;
+ color:black;
+ font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🔧 Admin Panel</header>
+
+<div class="box">
+<h3>Withdraw Request</h3>
+<div id="req">No Request</div>
+</div>
+
+<div class="box">
+<button onclick="clearReq()">✅ Mark as Paid</button>
+<button onclick="logout()">🚪 Logout</button>
+</div>
+
+<script>
+
+if(sessionStorage.getItem("admin")!=="yes"){
+ window.location="admin-login.html";
+}
+
+function load(){
+
+ let r = localStorage.getItem("request");
+
+ if(!r){
+  document.getElementById("req").innerText="No Request Found";
+  return;
+ }
+
+ let d = JSON.parse(r);
+
+ document.getElementById("req").innerHTML=
+ "User ID: "+d.id+
+ "<br>Number: "+d.number+
+ "<br>Coins: "+d.coins+
+ "<br>Time: "+d.time;
+}
+
+function clearReq(){
+
+ localStorage.removeItem("request");
+
+ alert("Marked as Paid!");
+
+ load();
+}
+
+function logout(){
+
+ sessionStorage.removeItem("admin");
+
+ window.location="admin-login.html";
+}
+
+load();
+
+</script>
+
+</body>
+</html>
