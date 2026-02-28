@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Withdraw - Passive Wages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+header{
+  background:#020617;
+  padding:15px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.box{
+  background:#020617;
+  margin:15px;
+  padding:15px;
+  border-radius:10px;
+}
+
+input{
+  width:85%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  margin:8px;
+}
+
+button{
+  width:90%;
+  padding:12px;
+  margin:8px;
+  border:none;
+  border-radius:8px;
+  background:#facc15;
+  color:black;
+  font-size:16px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#020617;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>Withdraw</header>
+
+<div class="box">
+<h3>💰 Balance</h3>
+<h2><span id="bal">0</span> Coins</h2>
+</div>
+
+<div class="box">
+<h3>💳 Withdraw Request</h3>
+
+<input type="text" id="number" placeholder="Bkash / Nagad Number">
+
+<button onclick="withdraw()">Request Withdraw</button>
+
+<p id="msg"></p>
+</div>
+
+<div class="box">
+<p>⚠️ Minimum 20,000 Coins Required</p>
+<p>📌 ২৪ ঘন্টার মধ্যে পেমেন্ট পাবেন</p>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="tasks.html">Tasks</a>
+<a href="withdraw.html">Withdraw</a>
+</nav>
+
+<script>
+
+function getCoins(){
+ return Number(localStorage.getItem("coins")||0);
+}
+
+function show(){
+ document.getElementById("bal").innerText=getCoins();
+}
+
+function withdraw(){
+
+ let coins = getCoins();
+ let num = document.getElementById("number").value;
+
+ if(num.length<11){
+  alert("সঠিক নাম্বার দিন!");
+  return;
+ }
+
+ if(coins<20000){
+  alert("Minimum 20,000 Coins দরকার!");
+  return;
+ }
+
+ let uid = localStorage.getItem("uid");
+
+ let req = {
+  id:uid,
+  number:num,
+  coins:coins,
+  time:new Date().toLocaleString()
+ };
+
+ localStorage.setItem("request",JSON.stringify(req));
+
+ localStorage.setItem("coins",0);
+
+ alert("✅ Request Sent! 24 ঘন্টার মধ্যে পাবেন");
+
+ show();
+}
+
+show();
+
+</script>
+
+</body>
+</html>
