@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Passive Wages</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#0f172a;
+      color:white;
+      text-align:center;
+    }
+
+    header{
+      background:#020617;
+      padding:15px;
+      font-size:22px;
+      font-weight:bold;
+    }
+
+    .box{
+      background:#020617;
+      margin:15px;
+      padding:15px;
+      border-radius:10px;
+    }
+
+    button{
+      width:90%;
+      padding:12px;
+      margin:8px;
+      border:none;
+      border-radius:8px;
+      background:#2563eb;
+      color:white;
+      font-size:16px;
+    }
+
+    button:active{
+      opacity:0.7;
+    }
+
+    nav{
+      position:fixed;
+      bottom:0;
+      width:100%;
+      background:#020617;
+      display:flex;
+      justify-content:space-around;
+      padding:10px 0;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-size:14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Passive Wages</header>
+
+<div class="box">
+  <h3>👤 Profile</h3>
+  <p>ID: <span id="uid"></span></p>
+</div>
+
+<div class="box">
+  <h3>💰 Balance</h3>
+  <h1><span id="bal">0</span> Coins</h1>
+</div>
+
+<div class="box">
+  <h3>🎁 Daily Bonus</h3>
+  <button onclick="dailyBonus()">Get Bonus (+20)</button>
+</div>
+
+<div class="box">
+  <h3>⭐ Level</h3>
+  <p id="level">Beginner</p>
+</div>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="tasks.html">Tasks</a>
+  <a href="withdraw.html">Withdraw</a>
+</nav>
+
+<script>
+
+let uid = localStorage.getItem("uid");
+
+if(!uid){
+  uid = "PW" + Math.floor(Math.random()*1000000);
+  localStorage.setItem("uid",uid);
+}
+
+document.getElementById("uid").innerText = uid;
+
+function getCoins(){
+  return Number(localStorage.getItem("coins") || 0);
+}
+
+function setCoins(x){
+  localStorage.setItem("coins",x);
+  document.getElementById("bal").innerText = x;
+  updateLevel(x);
+}
+
+function dailyBonus(){
+  let last = localStorage.getItem("bonus");
+
+  let today = new Date().toDateString();
+
+  if(last === today){
+    alert("আজকে ইতিমধ্যে বোনাস নিয়েছো!");
+    return;
+  }
+
+  setCoins(getCoins()+20);
+  localStorage.setItem("bonus",today);
+
+  alert("🎉 +20 Coins যোগ হয়েছে!");
+}
+
+function updateLevel(c){
+  let l = "Beginner";
+
+  if(c>=5000) l="Silver";
+  if(c>=10000) l="Gold";
+  if(c>=20000) l="Diamond";
+
+  document.getElementById("level").innerText = l;
+}
+
+setCoins(getCoins());
+
+</script>
+
+</body>
+  </html>
